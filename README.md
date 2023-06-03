@@ -81,3 +81,20 @@ Admin - localhost:8083
 ## BREAKING CHANGES
 
 The `request` package is no longer supported, and does not receive security updates. As there is an active known vuln, in order to maintain security it has been replaced with the built in node's fetch using async/await (assuming production is on a late enough version of node to have fetch integrated). A discussion should be had to determine a new permenant request library to use. This should also be updated on other services ASAP.
+
+## New Routes
+
+Admin - localhost:8083
+- GET `/investments/export` Returns a CSV Response of all User's holdings, Forwards that response to the Investments microservice to handle.
+
+## Notes
+
+### Notes on Security
+- The other microservices should also be updated to their latest package versions.
+- It's difficult to comment on security when security is assumed with middleware and details on the projects implementation are unavailable.
+
+### Notes on Scalability
+- Listing all investments should be paginated, and redact data that is not nessicariy, i.e. holdings to make each item as small as possible.
+- Data storage should be in a format other than JSON, for this style of data I would personally use a relational DB due to it's consistency and enforced structure, this would also allow for example filtering to be done in node. Ofcourse this is probably just a limitiation of the "test enviroment".
+- It may be better to "Stream" the CSV file if it is large enough that being in memory would have performance issues.
+- Adding filters could also probably help, preventing millions of holding records from being in one file, but this is dependant on what the usecase for this file is.
