@@ -75,3 +75,9 @@ Financial Companies - localhost:8082
 
 Admin - localhost:8083
 - `/investments/:id` get an investment record by id
+
+# Soulution
+
+## BREAKING CHANGES
+
+The `request` package is no longer supported, and does not receive security updates. As there is an active known vuln, in order to maintain security it has been replaced with the built in node's fetch using async/await (assuming production is on a late enough version of node to have fetch integrated). A discussion should be had to determine a new permenant request library to use. This should also be updated on other services ASAP.
